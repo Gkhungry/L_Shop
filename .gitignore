@@ -1,2 +1,46 @@
 .idea/
 .idea
+# ОС / редакторы
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.iml
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# TypeScript / сборка
+dist/
+build/
+out/
+*.tsbuildinfo
+
+# Vite
+client/.vite/
+client/coverage/
+
+# Логи
+logs/
+*.log
+
+# Env
+.env
+.env.*
+!.env.example
+
+# Кэш
+.cache/
+tmp/
+temp/
+
+# Тесты
+coverage/
+jest-html-reporters-*.html
