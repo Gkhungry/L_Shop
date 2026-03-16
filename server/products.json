@@ -1,0 +1,122 @@
+[
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567801",
+    "name": "Смартфон Galaxy S24",
+    "description": "Флагманский смартфон с экраном 6.2 дюйма, процессором Snapdragon 8 Gen 3 и камерой 50 МП",
+    "price": 79990,
+    "category": "Смартфоны",
+    "brand": "Samsung",
+    "inStock": true,
+    "createdAt": "2025-01-15T10:00:00.000Z"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567802",
+    "name": "Смартфон iPhone 16",
+    "description": "Новейший iPhone с чипом A18, Dynamic Island и улучшенной камерой",
+    "price": 89990,
+    "category": "Смартфоны",
+    "brand": "Apple",
+    "inStock": true,
+    "createdAt": "2025-02-01T10:00:00.000Z"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567803",
+    "name": "Ноутбук MacBook Air M3",
+    "description": "Лёгкий и мощный ноутбук с чипом M3, 13.6 дюйма, 8 ГБ ОЗУ, 256 ГБ SSD",
+    "price": 124990,
+    "category": "Ноутбуки",
+    "brand": "Apple",
+    "inStock": true,
+    "createdAt": "2025-01-20T10:00:00.000Z"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567804",
+    "name": "Ноутбук ThinkPad X1 Carbon",
+    "description": "Бизнес-ноутбук с процессором Intel Core i7, 14 дюймов, 16 ГБ ОЗУ",
+    "price": 139990,
+    "category": "Ноутбуки",
+    "brand": "Lenovo",
+    "inStock": false,
+    "createdAt": "2025-02-10T10:00:00.000Z"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567805",
+    "name": "Наушники AirPods Pro 2",
+    "description": "Беспроводные наушники с активным шумоподавлением и пространственным звуком",
+    "price": 24990,
+    "category": "Аксессуары",
+    "brand": "Apple",
+    "inStock": true,
+    "createdAt": "2025-02-15T10:00:00.000Z"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567806",
+    "name": "Наушники WH-1000XM5",
+    "description": "Полноразмерные беспроводные наушники с лучшим шумоподавлением в классе",
+    "price": 32990,
+    "category": "Аксессуары",
+    "brand": "Sony",
+    "inStock": true,
+    "createdAt": "2025-03-01T10:00:00.000Z"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567807",
+    "name": "Планшет iPad Air M2",
+    "description": "Планшет с чипом M2, экраном 11 дюймов Liquid Retina и поддержкой Apple Pencil",
+    "price": 64990,
+    "category": "Планшеты",
+    "brand": "Apple",
+    "inStock": true,
+    "createdAt": "2025-03-05T10:00:00.000Z"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567808",
+    "name": "Планшет Galaxy Tab S9",
+    "description": "Android планшет с экраном AMOLED 11 дюймов, процессором Snapdragon 8 Gen 2",
+    "price": 59990,
+    "category": "Планшеты",
+    "brand": "Samsung",
+    "inStock": false,
+    "createdAt": "2025-02-20T10:00:00.000Z"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567809",
+    "name": "Смарт-часы Apple Watch Ultra 2",
+    "description": "Прочные смарт-часы для экстремальных условий с GPS и датчиком глубины",
+    "price": 79990,
+    "category": "Аксессуары",
+    "brand": "Apple",
+    "inStock": true,
+    "createdAt": "2025-03-10T10:00:00.000Z"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567810",
+    "name": "Монитор Dell UltraSharp 27",
+    "description": "4K монитор 27 дюймов с IPS матрицей, USB-C подключением и 99% sRGB",
+    "price": 45990,
+    "category": "Мониторы",
+    "brand": "Dell",
+    "inStock": true,
+    "createdAt": "2025-01-25T10:00:00.000Z"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567811",
+    "name": "Клавиатура MX Keys S",
+    "description": "Беспроводная умная клавиатура с подсветкой и переключением между устройствами",
+    "price": 11990,
+    "category": "Аксессуары",
+    "brand": "Logitech",
+    "inStock": true,
+    "createdAt": "2025-03-12T10:00:00.000Z"
+  },
+  {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567812",
+    "name": "Мышь MX Master 3S",
+    "description": "Эргономичная беспроводная мышь с тихим кликом и MagSpeed скроллом",
+    "price": 9990,
+    "category": "Аксессуары",
+    "brand": "Logitech",
+    "inStock": false,
+    "createdAt": "2025-02-28T10:00:00.000Z"
+  }
+]

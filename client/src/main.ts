@@ -2,6 +2,7 @@ import { Router } from './router';
 import { HomePage } from './pages/HomePage';
 import { RegisterPage } from './pages/RegisterPage';
 import { LoginPage } from './pages/LoginPage';
+import { CatalogPage } from './pages/CatalogPage';
 
 function bootstrap(): void {
     const root = document.getElementById('app');
@@ -27,11 +28,17 @@ function bootstrap(): void {
         page.render();
     };
 
+    const renderCatalog = (): void => {
+        const page = new CatalogPage(root);
+        void page.render();
+    };
+
     router = new Router(
         [
             { path: '/', handler: renderHome },
             { path: '/register', handler: renderRegister },
             { path: '/login', handler: renderLogin },
+            { path: '/catalog', handler: renderCatalog },
         ],
         () => {
             root.innerHTML = '<h1>404</h1>';
