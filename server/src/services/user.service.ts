@@ -1,5 +1,6 @@
 import { promises as fs } from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import crypto from 'crypto';
 import bcrypt from 'bcrypt';
 import {
@@ -8,6 +9,9 @@ import {
     UserRegistrationPayload,
     UserLoginPayload,
 } from '../types/user';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const USERS_FILE_PATH = path.join(__dirname, '..', '..', 'users.json');
 

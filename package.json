@@ -1,0 +1,17 @@
+{
+  "name": "l-shop",
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "dev": "concurrently -n client,server -c blue,green \"npm -w client run dev\" \"npm -w server run dev\"",
+    "build": "npm -w server run build && npm -w client run build",
+    "start": "npm -w server run start"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
+

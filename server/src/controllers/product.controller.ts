@@ -28,7 +28,7 @@ export async function getProductBrands(_req: Request, res: Response): Promise<vo
     res.status(200).json({ brands });
 }
 
-export async function getProduct(req: Request, res: Response): Promise<void> {
+export async function getProduct(req: Request<{ id: string }>, res: Response): Promise<void> {
     const { id } = req.params;
     const product = await getProductById(id);
 
