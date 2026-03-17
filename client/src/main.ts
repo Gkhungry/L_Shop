@@ -1,5 +1,4 @@
 import { Router } from './router';
-import { HomePage } from './pages/HomePage';
 import { RegisterPage } from './pages/RegisterPage';
 import { LoginPage } from './pages/LoginPage';
 import { CatalogPage } from './pages/CatalogPage';
@@ -20,19 +19,34 @@ function bootstrap(): void {
 
     let router: Router;
 
-    const renderHome = (): void => {
-        const page = new HomePage(root, router);
-        void page.render();
+    const renderRoot = (): void => {
+        router.navigate('/catalog');
     };
 
     const renderRegister = (): void => {
-        const page = new RegisterPage(root, router);
-        page.render();
+        void (async () => {
+            const user = await authSession.ensureUser();
+            if (user) {
+                router.navigate('/catalog');
+                return;
+            }
+
+            const page = new RegisterPage(root, router);
+            page.render();
+        })();
     };
 
     const renderLogin = (): void => {
-        const page = new LoginPage(root, router);
-        page.render();
+        void (async () => {
+            const user = await authSession.ensureUser();
+            if (user) {
+                router.navigate('/catalog');
+                return;
+            }
+
+            const page = new LoginPage(root, router);
+            page.render();
+        })();
     };
 
     const renderCatalog = (): void => {
@@ -42,7 +56,7 @@ function bootstrap(): void {
 
     router = new Router(
         [
-            { path: '/', handler: renderHome },
+            { path: '/', handler: renderRoot },
             { path: '/register', handler: renderRegister },
             { path: '/login', handler: renderLogin },
             { path: '/catalog', handler: renderCatalog },
