@@ -14,6 +14,7 @@ body {
 nav {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 16px;
     padding: 12px 24px;
     background-color: #111827;
@@ -31,6 +32,77 @@ nav a {
 nav a:hover {
     background-color: #374151;
     color: #ffffff;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    position: relative;
+}
+
+.nav-action {
+    appearance: none;
+    border: none;
+    background: transparent;
+    color: #e5e7eb;
+    font-size: 14px;
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.nav-action:hover {
+    background-color: #374151;
+    color: #ffffff;
+}
+
+.nav-menu {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 8px);
+    min-width: 220px;
+    background: #ffffff;
+    color: #111827;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(15, 23, 42, 0.18);
+    overflow: hidden;
+    z-index: 10;
+}
+
+.nav-menu a,
+.nav-menu button {
+    width: 100%;
+    display: block;
+    text-align: left;
+    padding: 10px 12px;
+    font-size: 14px;
+    border-radius: 0;
+    background: transparent;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+.nav-menu a {
+    text-decoration: none;
+}
+
+.nav-menu a:hover,
+.nav-menu button:hover {
+    background: #f3f4f6;
+}
+
+.nav-menu-sep {
+    height: 1px;
+    background: #e5e7eb;
 }
 
 main#app {
@@ -142,6 +214,12 @@ button:active {
     nav {
         flex-wrap: wrap;
         gap: 8px;
+    }
+
+    .nav-menu {
+        min-width: 100%;
+        left: 0;
+        right: 0;
     }
 }
 
