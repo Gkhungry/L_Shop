@@ -2,6 +2,9 @@ import { Router } from './router';
 import { RegisterPage } from './pages/RegisterPage';
 import { LoginPage } from './pages/LoginPage';
 import { CatalogPage } from './pages/CatalogPage';
+import { ProfilePage } from './pages/ProfilePage';
+import { EditProfilePage } from './pages/EditProfilePage';
+import { PurchasesPage } from './pages/PurchasesPage';
 import { authSession } from './auth/session';
 import { HeaderAuth } from './components/HeaderAuth';
 
@@ -54,12 +57,54 @@ function bootstrap(): void {
         void page.render();
     };
 
+    const renderProfile = (): void => {
+        void (async () => {
+            const user = await authSession.ensureUser();
+            if (!user) {
+                router.navigate('/login');
+                return;
+            }
+
+            const page = new ProfilePage(root, router);
+            void page.render();
+        })();
+    };
+
+    const renderEditProfile = (): void => {
+        void (async () => {
+            const user = await authSession.ensureUser();
+            if (!user) {
+                router.navigate('/login');
+                return;
+            }
+
+            const page = new EditProfilePage(root, router);
+            void page.render();
+        })();
+    };
+
+    const renderPurchases = (): void => {
+        void (async () => {
+            const user = await authSession.ensureUser();
+            if (!user) {
+                router.navigate('/login');
+                return;
+            }
+
+            const page = new PurchasesPage(root, router);
+            void page.render();
+        })();
+    };
+
     router = new Router(
         [
             { path: '/', handler: renderRoot },
             { path: '/register', handler: renderRegister },
             { path: '/login', handler: renderLogin },
             { path: '/catalog', handler: renderCatalog },
+            { path: '/profile', handler: renderProfile },
+            { path: '/profile/edit', handler: renderEditProfile },
+            { path: '/purchases', handler: renderPurchases },
         ],
         () => {
             root.innerHTML = '<h1>404</h1>';
