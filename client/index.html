@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
@@ -7,10 +7,10 @@
 </head>
 <body>
 <nav>
-  <a href="#/">Главная</a>
-  <a href="#/catalog">Каталог</a>
-  <a href="#/register">Регистрация</a>
-  <a href="#/login">Логин</a>
+  <div class="nav-left">
+    <a href="#/catalog">Каталог</a>
+  </div>
+  <div class="nav-right" id="nav-auth"></div>
 </nav>
 <main id="app"></main>
 <script type="module" src="/src/main.ts"></script>
