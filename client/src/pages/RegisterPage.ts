@@ -1,4 +1,5 @@
-import { register } from '../api/authApi';
+﻿import { register } from '../api/authApi';
+import { authSession } from '../auth/session';
 import type { Router } from '../router';
 
 export class RegisterPage {
@@ -37,6 +38,7 @@ export class RegisterPage {
         </div>
         <button type="submit">Зарегистрироваться</button>
       </form>
+      <p class="info"><a href="#/login">Уже есть аккаунт? Войти</a></p>
       <p id="register-error"></p>
     `;
 
@@ -58,14 +60,15 @@ export class RegisterPage {
             const password = String(formData.get('password') ?? '');
 
             try {
-                await register({
+                const user = await register({
                     name,
                     email,
                     login: loginValue,
                     phone,
                     password,
                 });
-                this.router.navigate('/');
+                authSession.setUser(user);
+                this.router.navigate('/catalog');
             } catch (e: unknown) {
                 errorEl.textContent = (e as Error).message;
             }

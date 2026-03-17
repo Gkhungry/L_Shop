@@ -1,4 +1,5 @@
-import { login } from '../api/authApi';
+﻿import { login } from '../api/authApi';
+import { authSession } from '../auth/session';
 import type { Router } from '../router';
 
 export class LoginPage {
@@ -13,7 +14,7 @@ export class LoginPage {
 
     public render(): void {
         this.root.innerHTML = `
-      <h1>Логин</h1>
+      <h1>Вход</h1>
       <form id="login-form">
         <div>
           <label>Логин / Email / Телефон</label>
@@ -25,6 +26,7 @@ export class LoginPage {
         </div>
         <button type="submit">Войти</button>
       </form>
+      <p class="info"><a href="#/register">Нет аккаунта? Зарегистрироваться</a></p>
       <p id="login-error"></p>
     `;
 
@@ -43,8 +45,9 @@ export class LoginPage {
             const password = String(formData.get('password') ?? '');
 
             try {
-                await login({ loginOrEmailOrPhone: identifier, password });
-                this.router.navigate('/');
+                const user = await login({ loginOrEmailOrPhone: identifier, password });
+                authSession.setUser(user);
+                this.router.navigate('/catalog');
             } catch (e: unknown) {
                 errorEl.textContent = (e as Error).message;
             }
