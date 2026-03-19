@@ -2,9 +2,13 @@ import { fetchProducts, fetchCategories, fetchBrands } from '../api/productsApi'
 import type { Product } from '../types/product';
 import type { ProductFilters } from '../api/productsApi';
 import { cartStore } from '../store/cartStore';
+import { authSession } from '../auth/session';
+import type { Router } from '../router';
 
 export class CatalogPage {
     private readonly root: HTMLElement;
+
+    private readonly router: Router;
 
     private products: Product[] = [];
 
@@ -14,8 +18,9 @@ export class CatalogPage {
 
     private filters: ProductFilters = {};
 
-    constructor(root: HTMLElement) {
+    constructor(root: HTMLElement, router: Router) {
         this.root = root;
+        this.router = router;
     }
 
     public async render(): Promise<void> {
@@ -135,7 +140,7 @@ export class CatalogPage {
                 <div class="product-card ${!p.inStock ? 'out-of-stock' : ''}">
                     ${p.image ? `<div class="product-image-wrap"><img class="product-image" src="${this.escapeHtml(p.image)}" alt="${this.escapeHtml(p.name)}" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/330x220/21262d/f97316?text='+encodeURIComponent(this.alt)" /></div>` : ''}
                     <div class="product-info">
-                        <h3 class="product-name">${this.escapeHtml(p.name)}</h3>
+                        <h3 class="product-name" data-title>${this.escapeHtml(p.name)}</h3>
                         <p class="product-description">${this.escapeHtml(p.description)}</p>
                         <div class="product-meta">
                             <span class="product-category">${this.escapeHtml(p.category)}</span>
@@ -145,7 +150,7 @@ export class CatalogPage {
                         ${p.inStock && p.stolenFrom ? `<p class="product-stolen-from">Украдено у: <span class="stolen-nickname">${this.escapeHtml(p.stolenFrom)}</span></p>` : ''}
                     </div>
                     <div class="product-footer">
-                        <span class="product-price">${p.price.toLocaleString('ru-RU')} ₽</span>
+                        <span class="product-price" data-price>${p.price.toLocaleString('ru-RU')} ₽</span>
                         <span class="product-stock ${p.inStock ? 'in-stock' : 'no-stock'}">${p.inStock ? 'В наличии' : 'Ещё не украли'}</span>
                     </div>
                     ${p.inStock ? `<button type="button" class="btn-add-cart" data-product-id="${this.escapeHtml(p.id)}">В корзину</button>` : ''}
@@ -174,10 +179,22 @@ export class CatalogPage {
             if (productId) {
                 const product = this.products.find((p) => p.id === productId);
                 if (product) {
-                    btn.addEventListener('click', () => cartStore.add(product));
+                    btn.addEventListener('click', () => {
+                        void this.handleAddToCart(product);
+                    });
                 }
             }
         });
+    }
+
+    private async handleAddToCart(product: Product): Promise<void> {
+        const user = await authSession.ensureUser();
+        if (!user) {
+            this.router.navigate('/login');
+            return;
+        }
+
+        cartStore.add(product);
     }
 
     private applyFilters(): void {

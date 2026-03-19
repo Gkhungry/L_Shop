@@ -1,0 +1,29 @@
+[
+  {
+    "id": "07be6729-65c0-484c-bbf9-b6e86f37dc5b",
+    "userId": "35750e41-2aa5-42e7-8099-429e500a788b",
+    "items": [
+      {
+        "productId": "skin-awp-dragon-lore",
+        "name": "AWP | Dragon Lore",
+        "price": 2450000,
+        "quantity": 1
+      }
+    ],
+    "address": {
+      "fullAddress": "Минск, ул. Пимена Панченки, 64, 4",
+      "recipientPhone": "+375333623615",
+      "recipientEmail": "kirillgogle15@gmail.com",
+      "comment": "Возьми телефон детка"
+    },
+    "payment": {
+      "method": "card",
+      "cardholderName": "KIRYL VALCHOK",
+      "cardLast4": "1443",
+      "status": "paid"
+    },
+    "total": 2450000,
+    "status": "processing",
+    "createdAt": "2026-03-19T13:58:34.739Z"
+  }
+]
