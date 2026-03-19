@@ -22,7 +22,7 @@ export class CartPage {
         this.router = router;
     }
 
-    public render(): void {
+    public async render(): Promise<void> {
         this.mounted = true;
         this.root.innerHTML = '<h1>Корзина</h1><p class="info">Загрузка...</p>';
         this.renderContent();
@@ -67,7 +67,10 @@ export class CartPage {
                     <span>Итого:</span>
                     <strong>${total.toLocaleString('ru-RU')} ₽</strong>
                 </div>
-                <button type="button" id="cart-clear" class="btn-secondary">Очистить корзину</button>
+                <div class="cart-footer-actions">
+                    <button type="button" id="go-to-delivery">Оформить доставку</button>
+                    <button type="button" id="cart-clear" class="btn-secondary">Очистить корзину</button>
+                </div>
             </div>
         `;
 
@@ -81,13 +84,13 @@ export class CartPage {
             <div class="cart-item" data-product-id="${escapeHtml(product.id)}">
                 ${product.image ? `<img class="cart-item-image" src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}" />` : ''}
                 <div class="cart-item-info">
-                    <h3 class="cart-item-name">${escapeHtml(product.name)}</h3>
+                    <h3 class="cart-item-name" data-title="basket">${escapeHtml(product.name)}</h3>
                     <div class="cart-item-meta">
                         <span class="product-category">${escapeHtml(product.category)}</span>
                         ${product.rarity ? `<span class="product-rarity rarity-${product.rarity.toLowerCase().replace(/\s+/g, '-')}">${escapeHtml(product.rarity)}</span>` : ''}
                     </div>
                     ${product.stolenFrom ? `<p class="cart-item-stolen">Украдено у: <span class="stolen-nickname">${escapeHtml(product.stolenFrom)}</span></p>` : ''}
-                    <span class="cart-item-price">${product.price.toLocaleString('ru-RU')} ₽ × ${quantity} = ${subtotal.toLocaleString('ru-RU')} ₽</span>
+                    <span class="cart-item-price" data-price="basket">${product.price.toLocaleString('ru-RU')} ₽ × ${quantity} = ${subtotal.toLocaleString('ru-RU')} ₽</span>
                 </div>
                 <div class="cart-item-actions">
                     <div class="quantity-control">
@@ -125,6 +128,10 @@ export class CartPage {
 
         document.getElementById('cart-clear')?.addEventListener('click', () => {
             cartStore.clear();
+        });
+
+        document.getElementById('go-to-delivery')?.addEventListener('click', () => {
+            this.router.navigate('/delivery');
         });
     }
 }

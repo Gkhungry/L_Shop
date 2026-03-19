@@ -6,6 +6,7 @@ import { ProfilePage } from './pages/ProfilePage';
 import { EditProfilePage } from './pages/EditProfilePage';
 import { PurchasesPage } from './pages/PurchasesPage';
 import { CartPage } from './pages/CartPage';
+import { DeliveryPage } from './pages/DeliveryPage';
 import { authSession } from './auth/session';
 import { HeaderAuth } from './components/HeaderAuth';
 import { cartStore } from './store/cartStore';
@@ -55,7 +56,7 @@ function bootstrap(): void {
     };
 
     const renderCatalog = (): void => {
-        const page = new CatalogPage(root);
+        const page = new CatalogPage(root, router);
         void page.render();
     };
 
@@ -108,9 +109,30 @@ function bootstrap(): void {
     };
 
     const renderCart = (): void => {
-        cleanupCartPage();
-        cartPageInstance = new CartPage(root, router);
-        cartPageInstance.render();
+        void (async () => {
+            const user = await authSession.ensureUser();
+            if (!user) {
+                router.navigate('/login');
+                return;
+            }
+
+            cleanupCartPage();
+            cartPageInstance = new CartPage(root, router);
+            void cartPageInstance.render();
+        })();
+    };
+
+    const renderDelivery = (): void => {
+        void (async () => {
+            const user = await authSession.ensureUser();
+            if (!user) {
+                router.navigate('/login');
+                return;
+            }
+
+            const page = new DeliveryPage(root, router);
+            void page.render();
+        })();
     };
 
     const updateCartBadge = (): void => {
@@ -132,6 +154,7 @@ function bootstrap(): void {
             { path: '/login', handler: wrapHandler(renderLogin) },
             { path: '/catalog', handler: wrapHandler(renderCatalog) },
             { path: '/cart', handler: renderCart },
+            { path: '/delivery', handler: wrapHandler(renderDelivery) },
             { path: '/profile', handler: wrapHandler(renderProfile) },
             { path: '/profile/edit', handler: wrapHandler(renderEditProfile) },
             { path: '/purchases', handler: wrapHandler(renderPurchases) },
