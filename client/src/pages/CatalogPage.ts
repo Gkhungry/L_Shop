@@ -1,6 +1,7 @@
 import { fetchProducts, fetchCategories, fetchBrands } from '../api/productsApi';
 import type { Product } from '../types/product';
 import type { ProductFilters } from '../api/productsApi';
+import { cartStore } from '../store/cartStore';
 
 export class CatalogPage {
     private readonly root: HTMLElement;
@@ -18,7 +19,7 @@ export class CatalogPage {
     }
 
     public async render(): Promise<void> {
-        this.root.innerHTML = '<h1>Каталог</h1><p class="info">Загрузка...</p>';
+        this.root.innerHTML = '<h1>Каталог скинов</h1><p class="info">Загрузка...</p>';
 
         try {
             [this.categories, this.brands] = await Promise.all([
@@ -27,7 +28,7 @@ export class CatalogPage {
             ]);
             await this.loadProducts();
         } catch {
-            this.root.innerHTML = '<h1>Каталог</h1><p class="error">Ошибка загрузки данных</p>';
+            this.root.innerHTML = '<h1>Каталог скинов</h1><p class="error">Ошибка загрузки данных</p>';
         }
     }
 
@@ -45,28 +46,28 @@ export class CatalogPage {
 
     private renderPage(): void {
         this.root.innerHTML = `
-            <h1>Каталог</h1>
+            <h1>Каталог скинов</h1>
             <div class="catalog-layout">
                 <aside class="filters-panel">
                     <h3>Фильтры</h3>
 
                     <div class="filter-group">
                         <label for="filter-search">Поиск</label>
-                        <input type="text" id="filter-search" placeholder="Название товара..." value="${this.escapeHtml(this.filters.search ?? '')}" />
+                        <input type="text" id="filter-search" placeholder="Название скина..." value="${this.escapeHtml(this.filters.search ?? '')}" />
                     </div>
 
                     <div class="filter-group">
-                        <label for="filter-category">Категория</label>
+                        <label for="filter-category">Оружие</label>
                         <select id="filter-category">
-                            <option value="">Все категории</option>
+                            <option value="">Все оружие</option>
                             ${this.categories.map((c) => `<option value="${this.escapeHtml(c)}" ${this.filters.category === c ? 'selected' : ''}>${this.escapeHtml(c)}</option>`).join('')}
                         </select>
                     </div>
 
                     <div class="filter-group">
-                        <label for="filter-brand">Бренд</label>
+                        <label for="filter-brand">Редкость</label>
                         <select id="filter-brand">
-                            <option value="">Все бренды</option>
+                            <option value="">Все редкости</option>
                             ${this.brands.map((b) => `<option value="${this.escapeHtml(b)}" ${this.filters.brand === b ? 'selected' : ''}>${this.escapeHtml(b)}</option>`).join('')}
                         </select>
                     </div>
@@ -83,7 +84,7 @@ export class CatalogPage {
                     <div class="filter-group">
                         <label class="checkbox-label">
                             <input type="checkbox" id="filter-instock" ${this.filters.inStock ? 'checked' : ''} />
-                            Только в наличии
+                            Только украденные
                         </label>
                     </div>
 
@@ -132,18 +133,22 @@ export class CatalogPage {
             .map(
                 (p) => `
                 <div class="product-card ${!p.inStock ? 'out-of-stock' : ''}">
+                    ${p.image ? `<div class="product-image-wrap"><img class="product-image" src="${this.escapeHtml(p.image)}" alt="${this.escapeHtml(p.name)}" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/330x220/21262d/f97316?text='+encodeURIComponent(this.alt)" /></div>` : ''}
                     <div class="product-info">
                         <h3 class="product-name">${this.escapeHtml(p.name)}</h3>
                         <p class="product-description">${this.escapeHtml(p.description)}</p>
                         <div class="product-meta">
                             <span class="product-category">${this.escapeHtml(p.category)}</span>
-                            <span class="product-brand">${this.escapeHtml(p.brand)}</span>
+                            <span class="product-rarity rarity-${(p.rarity ?? p.brand).toLowerCase().replace(/\s+/g, '-')}">${this.escapeHtml(p.rarity ?? p.brand)}</span>
+                            ${p.wear ? `<span class="product-wear">${this.escapeHtml(p.wear)}</span>` : ''}
                         </div>
+                        ${p.inStock && p.stolenFrom ? `<p class="product-stolen-from">Украдено у: <span class="stolen-nickname">${this.escapeHtml(p.stolenFrom)}</span></p>` : ''}
                     </div>
                     <div class="product-footer">
                         <span class="product-price">${p.price.toLocaleString('ru-RU')} ₽</span>
-                        <span class="product-stock ${p.inStock ? 'in-stock' : 'no-stock'}">${p.inStock ? 'В наличии' : 'Нет в наличии'}</span>
+                        <span class="product-stock ${p.inStock ? 'in-stock' : 'no-stock'}">${p.inStock ? 'В наличии' : 'Ещё не украли'}</span>
                     </div>
+                    ${p.inStock ? `<button type="button" class="btn-add-cart" data-product-id="${this.escapeHtml(p.id)}">В корзину</button>` : ''}
                 </div>
             `,
             )
@@ -161,6 +166,16 @@ export class CatalogPage {
         searchInput?.addEventListener('keydown', (e) => {
             if ((e as KeyboardEvent).key === 'Enter') {
                 this.applyFilters();
+            }
+        });
+
+        this.root.querySelectorAll('.btn-add-cart').forEach((btn) => {
+            const productId = (btn as HTMLElement).dataset.productId;
+            if (productId) {
+                const product = this.products.find((p) => p.id === productId);
+                if (product) {
+                    btn.addEventListener('click', () => cartStore.add(product));
+                }
             }
         });
     }

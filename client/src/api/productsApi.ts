@@ -45,7 +45,7 @@ export async function fetchProducts(filters: ProductFilters = {}): Promise<Produ
     const url = `${BASE_URL}${buildQueryParams(filters)}`;
     const response = await fetch(url);
     if (!response.ok) {
-        throw new Error('Failed to fetch products');
+        throw new Error('Ошибка загрузки товаров');
     }
     const data: ProductsResponse = await response.json();
     return data.products;
@@ -54,7 +54,7 @@ export async function fetchProducts(filters: ProductFilters = {}): Promise<Produ
 export async function fetchCategories(): Promise<string[]> {
     const response = await fetch(`${BASE_URL}/categories`);
     if (!response.ok) {
-        throw new Error('Failed to fetch categories');
+        throw new Error('Ошибка загрузки категорий');
     }
     const data: CategoriesResponse = await response.json();
     return data.categories;
@@ -63,7 +63,7 @@ export async function fetchCategories(): Promise<string[]> {
 export async function fetchBrands(): Promise<string[]> {
     const response = await fetch(`${BASE_URL}/brands`);
     if (!response.ok) {
-        throw new Error('Failed to fetch brands');
+        throw new Error('Ошибка загрузки брендов');
     }
     const data: BrandsResponse = await response.json();
     return data.brands;
