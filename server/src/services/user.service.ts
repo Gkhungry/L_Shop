@@ -51,7 +51,7 @@ export async function registerUser(
     );
 
     if (exists) {
-        throw new Error('User with same email/login/phone already exists');
+        throw new Error('Пользователь с таким email, логином или телефоном уже существует');
     }
 
     const passwordHash = await bcrypt.hash(payload.password, 10);

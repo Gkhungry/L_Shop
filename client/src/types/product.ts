@@ -7,4 +7,8 @@ export interface Product {
     brand: string;
     inStock: boolean;
     createdAt: string;
+    rarity?: string;
+    wear?: string;
+    image?: string;
+    stolenFrom?: string | null;
 }

@@ -33,7 +33,7 @@ async function request<T>(url: string, options: RequestInit): Promise<T> {
         const errorBody = (await response.json().catch(() => null)) as
             | { error?: string }
             | null;
-        const message = errorBody?.error ?? `Request failed with ${response.status}`;
+        const message = errorBody?.error ?? `Ошибка запроса: ${response.status}`;
         throw new Error(message);
     }
 

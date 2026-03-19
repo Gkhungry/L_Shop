@@ -17,7 +17,7 @@ export async function postRegister(req: Request, res: Response): Promise<void> {
         !body.phone ||
         !body.password
     ) {
-        res.status(400).json({ error: 'All fields are required' });
+        res.status(400).json({ error: 'Все поля обязательны' });
         return;
     }
 
@@ -34,14 +34,14 @@ export async function postLogin(req: Request, res: Response): Promise<void> {
     const body = req.body as Partial<UserLoginPayload>;
 
     if (!body.loginOrEmailOrPhone || !body.password) {
-        res.status(400).json({ error: 'Credentials are required' });
+        res.status(400).json({ error: 'Укажите логин и пароль' });
         return;
     }
 
     const user = await authenticateUser(body as UserLoginPayload);
 
     if (!user) {
-        res.status(401).json({ error: 'Invalid credentials' });
+        res.status(401).json({ error: 'Неверный логин или пароль' });
         return;
     }
 
@@ -57,13 +57,13 @@ export async function postLogout(_req: Request, res: Response): Promise<void> {
 export async function getCurrentUser(req: Request, res: Response): Promise<void> {
     const userId = getUserIdFromRequest(req);
     if (!userId) {
-        res.status(401).json({ error: 'Not authenticated' });
+        res.status(401).json({ error: 'Необходима авторизация' });
         return;
     }
     const user = await getUserById(userId);
     if (!user) {
         clearSessionCookie(res);
-        res.status(401).json({ error: 'Session invalid' });
+        res.status(401).json({ error: 'Сессия недействительна' });
         return;
     }
     res.status(200).json({ user });

@@ -8,7 +8,7 @@ export function requireAuth(
 ): void {
     const userId = getUserIdFromRequest(req);
     if (!userId) {
-        res.status(401).json({ error: 'Authentication required' });
+        res.status(401).json({ error: 'Требуется авторизация' });
         return;
     }
     // можно повесить userId на req, если нужно

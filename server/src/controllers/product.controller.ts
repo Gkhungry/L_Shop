@@ -33,7 +33,7 @@ export async function getProduct(req: Request<{ id: string }>, res: Response): P
     const product = await getProductById(id);
 
     if (!product) {
-        res.status(404).json({ error: 'Product not found' });
+        res.status(404).json({ error: 'Товар не найден' });
         return;
     }
 
